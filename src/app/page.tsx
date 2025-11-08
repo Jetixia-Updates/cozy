@@ -487,7 +487,7 @@ export default function HomePage() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p className="flex items-center justify-center gap-2">© 2024 <img src="/hive.png" alt="Cozy Hive" className="h-8 w-auto inline-block" /> {t('footer.copyright')}</p>
+            <p className="flex items-center justify-center gap-2">© 2025 <img src="/hive.png" alt="Cozy Hive" className="h-8 w-auto inline-block" /> {t('footer.copyright')}</p>
           </div>
         </div>
       </footer>
