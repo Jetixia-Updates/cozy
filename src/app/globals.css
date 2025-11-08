@@ -201,11 +201,46 @@
 
   /* Responsive Text Utilities */
   .text-responsive {
-    @apply text-sm sm:text-base lg:text-lg;
+    @apply text-sm sm:text-base lg:text-lg xl:text-xl 3xl:text-2xl 5xl:text-3xl 8k:text-4xl;
   }
 
   .heading-responsive {
-    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 3xl:text-6xl 5xl:text-7xl 8k:text-8xl;
+  }
+
+  /* 8K Responsive Container */
+  .container-8k {
+    @apply max-w-screen-xl 3xl:max-w-screen-3xl 5xl:max-w-screen-5xl 8k:max-w-screen-8k;
+  }
+
+  /* 8K Padding Utilities */
+  .p-responsive {
+    @apply p-4 md:p-6 xl:p-8 3xl:p-12 5xl:p-16 8k:p-24;
+  }
+
+  .px-responsive {
+    @apply px-4 md:px-6 xl:px-8 3xl:px-12 5xl:px-16 8k:px-24;
+  }
+
+  .py-responsive {
+    @apply py-4 md:py-6 xl:py-8 3xl:py-12 5xl:py-16 8k:py-24;
+  }
+
+  /* 8K Font Sizes */
+  .text-8k-sm {
+    @apply text-base 8k:text-2xl;
+  }
+
+  .text-8k-base {
+    @apply text-lg 8k:text-3xl;
+  }
+
+  .text-8k-lg {
+    @apply text-xl 8k:text-4xl;
+  }
+
+  .text-8k-xl {
+    @apply text-2xl 8k:text-6xl;
   }
 }
 

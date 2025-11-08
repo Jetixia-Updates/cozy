@@ -532,7 +532,7 @@ export default function BookingPage() {
                   <div className="mt-4 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
                     <p className="text-sm text-primary-800 dark:text-primary-200">
                       <Info className="w-4 h-4 inline ml-2" />
-                      وقت الانتهاء المتوقع: {calculateEndTime(selectedStartTime, selectedDuration)}
+                      {i18n.language === 'ar' ? 'وقت الانتهاء المتوقع:' : 'Expected End Time:'} {calculateEndTime(selectedStartTime, selectedDuration)}
                     </p>
                   </div>
                 )}
@@ -634,20 +634,20 @@ export default function BookingPage() {
             >
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  بيانات العميل
+                  {i18n.language === 'ar' ? 'بيانات العميل' : 'Customer Details'}
                 </h2>
 
                 <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       <User className="w-4 h-4 inline ml-2" />
-                      الاسم الكامل
+                      {i18n.language === 'ar' ? 'الاسم الكامل' : 'Full Name'}
                     </label>
                     <input
                       type="text"
                       value={customerDetails.name}
                       onChange={(e) => setCustomerDetails({ ...customerDetails, name: e.target.value })}
-                      placeholder="أدخل اسمك الكامل"
+                      placeholder={i18n.language === 'ar' ? 'أدخل اسمك الكامل' : 'Enter your full name'}
                       className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     />
                   </div>
@@ -655,7 +655,7 @@ export default function BookingPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       <Mail className="w-4 h-4 inline ml-2" />
-                      البريد الإلكتروني
+                      {i18n.language === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}
                     </label>
                     <input
                       type="email"
@@ -663,13 +663,14 @@ export default function BookingPage() {
                       onChange={(e) => setCustomerDetails({ ...customerDetails, email: e.target.value })}
                       placeholder="example@email.com"
                       className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      dir="ltr"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       <Phone className="w-4 h-4 inline ml-2" />
-                      رقم الهاتف
+                      {i18n.language === 'ar' ? 'رقم الهاتف' : 'Phone Number'}
                     </label>
                     <input
                       type="tel"
@@ -677,6 +678,7 @@ export default function BookingPage() {
                       onChange={(e) => setCustomerDetails({ ...customerDetails, phone: e.target.value })}
                       placeholder="01xxxxxxxxx"
                       className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      dir="ltr"
                     />
                   </div>
                 </div>
@@ -686,13 +688,13 @@ export default function BookingPage() {
                     onClick={() => setStep('seats')}
                     className="flex-1 px-6 py-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition font-medium"
                   >
-                    رجوع
+                    {i18n.language === 'ar' ? 'رجوع' : 'Back'}
                   </button>
                   <button
                     onClick={handleConfirmBooking}
                     className="flex-1 px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 transition font-medium shadow-lg"
                   >
-                    تأكيد الحجز
+                    {i18n.language === 'ar' ? 'تأكيد الحجز' : 'Confirm Booking'}
                   </button>
                 </div>
               </div>

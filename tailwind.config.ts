@@ -139,6 +139,12 @@ export default {
       },
       screens: {
         xs: "475px",
+        '3xl': '1920px',
+        '4xl': '2560px',
+        '5xl': '3840px',
+        '6xl': '5120px',
+        '7xl': '6400px',
+        '8k': '7680px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
