@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
       data: {
         roomId: data.roomId,
         seatNumber: data.seatNumber,
+        row: data.row || data.seatNumber.charAt(0), // Extract row from seatNumber (e.g., "A1" -> "A")
         seatType: data.seatType || 'STANDARD',
         status: data.status || 'AVAILABLE',
         pricePerHour: data.pricePerHour,
@@ -84,12 +85,11 @@ export async function PATCH(request: NextRequest) {
       where: { id },
       data: {
         seatNumber: data.seatNumber,
+        row: data.row || (data.seatNumber ? data.seatNumber.charAt(0) : undefined),
         seatType: data.seatType,
         status: data.status,
         pricePerHour: data.pricePerHour,
         amenities: data.amenities,
-        currentUser: data.currentUser,
-        bookedUntil: data.bookedUntil ? new Date(data.bookedUntil) : null,
       },
       include: {
         room: true,
