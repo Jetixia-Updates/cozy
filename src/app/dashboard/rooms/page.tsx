@@ -230,7 +230,7 @@ export default function RoomsPage() {
       lastBooking: '2024-11-05 16:00',
       nextAvailable: '2024-11-09 09:00'
     }
-  ])
+  ];
 
   // New room state for adding
   const [newRoom, setNewRoom] = useState<Partial<Room>>({
