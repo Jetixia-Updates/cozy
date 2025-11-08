@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -25,7 +26,8 @@ import {
   Phone,
   CreditCard,
   AlertCircle,
-  Info
+  Info,
+  LogIn
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -62,21 +64,28 @@ interface Booking {
 }
 
 export default function BookingPage() {
+  const router = useRouter()
   const { t, i18n } = useTranslation()
   const dir = i18n.language === 'ar' ? 'rtl' : 'ltr'
   
   // Check if user is logged in
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userEmail, setUserEmail] = useState('')
+  const [userName, setUserName] = useState('')
+  const [userPhone, setUserPhone] = useState('')
   
   useEffect(() => {
     // Check localStorage for user data
     const userType = localStorage.getItem('userType')
     const email = localStorage.getItem('userEmail')
+    const name = localStorage.getItem('userName')
+    const phone = localStorage.getItem('userPhone')
     
     if (userType && email) {
       setIsLoggedIn(true)
       setUserEmail(email)
+      setUserName(name || '')
+      setUserPhone(phone || '')
     }
   }, [])
   
@@ -237,6 +246,19 @@ export default function BookingPage() {
   }
 
   const handleRoomSelect = (room: Room) => {
+    // Check if user is logged in before allowing room selection
+    if (!isLoggedIn) {
+      const confirmLogin = confirm(
+        i18n.language === 'ar' 
+          ? 'يجب عليك تسجيل الدخول أولاً للقيام بالحجز. هل تريد الانتقال لصفحة تسجيل الدخول؟'
+          : 'You must login first to make a booking. Do you want to go to the login page?'
+      )
+      if (confirmLogin) {
+        router.push('/login')
+      }
+      return
+    }
+    
     setSelectedRoom(room)
     setStep('seats')
     const generatedSeats = generateSeats(room.id, room.capacity)
@@ -279,12 +301,40 @@ export default function BookingPage() {
   }
 
   const handleConfirmBooking = () => {
-    if (!customerDetails.name || !customerDetails.email || !customerDetails.phone) {
-      alert(i18n.language === 'ar' ? 'الرجاء إدخال جميع البيانات' : 'Please enter all details')
-      return
+    if (!isLoggedIn) {
+      if (!customerDetails.name || !customerDetails.email || !customerDetails.phone) {
+        alert(i18n.language === 'ar' ? 'الرجاء إدخال جميع البيانات' : 'Please enter all details')
+        return
+      }
     }
-    // هنا يمكن إرسال البيانات للسيرفر
+    
+    // Save booking data
+    const bookingData = {
+      roomId: selectedRoom?.id,
+      roomName: selectedRoom?.name,
+      seats: selectedSeats,
+      date: selectedDate,
+      startTime: selectedStartTime,
+      duration: selectedDuration,
+      totalPrice: getTotalPrice(),
+      customerName: isLoggedIn ? userName : customerDetails.name,
+      customerEmail: isLoggedIn ? userEmail : customerDetails.email,
+      customerPhone: isLoggedIn ? userPhone : customerDetails.phone,
+      bookingTime: new Date().toISOString()
+    }
+    
+    // Save to localStorage for now (can be replaced with API call)
+    const existingBookings = JSON.parse(localStorage.getItem('userBookings') || '[]')
+    existingBookings.push(bookingData)
+    localStorage.setItem('userBookings', JSON.stringify(existingBookings))
+    
+    // Show confirmation then redirect to user profile
     setStep('confirmation')
+    
+    // Redirect to user profile after 3 seconds
+    setTimeout(() => {
+      router.push('/user/profile')
+    }, 3000)
   }
 
   const calculateEndTime = (startTime: string, duration: number) => {
@@ -358,6 +408,31 @@ export default function BookingPage() {
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
             {t('booking.subtitle')}
           </p>
+          
+          {/* Login Alert for Non-Logged Users */}
+          {!isLoggedIn && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4 flex items-start space-x-reverse space-x-3"
+            >
+              <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm text-yellow-800 dark:text-yellow-200 font-medium mb-2">
+                  {i18n.language === 'ar' 
+                    ? 'يجب تسجيل الدخول للقيام بالحجز' 
+                    : 'You must login to make a booking'}
+                </p>
+                <Link 
+                  href="/login"
+                  className="inline-flex items-center text-sm font-medium text-yellow-700 dark:text-yellow-300 hover:text-yellow-900 dark:hover:text-yellow-100 transition"
+                >
+                  <LogIn className="w-4 h-4 ml-1" />
+                  {i18n.language === 'ar' ? 'تسجيل الدخول الآن' : 'Login Now'}
+                </Link>
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Progress Steps */}
@@ -722,7 +797,7 @@ export default function BookingPage() {
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                   {i18n.language === 'ar' ? 'تم تأكيد الحجز بنجاح!' : 'Booking Confirmed Successfully!'}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-8">
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
                   {i18n.language === 'ar' ? 'شكراً لك! تم إرسال تفاصيل الحجز إلى بريدك الإلكتروني' : 'Thank you! Booking details have been sent to your email'}
                   {isLoggedIn && (
                     <span className="block mt-2 font-medium text-primary-600 dark:text-primary-400">
@@ -730,6 +805,17 @@ export default function BookingPage() {
                     </span>
                   )}
                 </p>
+                
+                {isLoggedIn && (
+                  <div className="mb-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
+                    <p className="text-sm text-primary-800 dark:text-primary-200 flex items-center justify-center">
+                      <Info className="w-4 h-4 ml-2" />
+                      {i18n.language === 'ar' 
+                        ? 'سيتم توجيهك إلى صفحة حسابك خلال 3 ثواني...' 
+                        : 'You will be redirected to your account page in 3 seconds...'}
+                    </p>
+                  </div>
+                )}
 
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 text-right space-y-4 mb-8">
                   <div className="flex justify-between">

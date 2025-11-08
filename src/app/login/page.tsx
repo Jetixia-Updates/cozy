@@ -99,9 +99,20 @@ export default function LoginPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
     
-    // حفظ نوع المستخدم
+    // حفظ نوع المستخدم وبياناته
     localStorage.setItem('userType', 'user')
     localStorage.setItem('userEmail', formData.email || formData.phone)
+    
+    // In a real app, you would get the user's name and phone from the API response
+    // For now, we'll save what we have
+    if (formData.email) {
+      // Extract name from email (temporary - should come from registration data)
+      const emailName = formData.email.split('@')[0]
+      localStorage.setItem('userName', emailName)
+    }
+    if (formData.phone) {
+      localStorage.setItem('userPhone', formData.phone)
+    }
     
     // Navigate to user profile on success
     router.push('/user/profile')
@@ -117,9 +128,12 @@ export default function LoginPage() {
       // In a real app, this would open Google OAuth popup/redirect
       console.log('Google Login initiated')
       
-      // حفظ نوع المستخدم
+      // حفظ نوع المستخدم وبياناته
+      const googleEmail = 'google-user@example.com'
       localStorage.setItem('userType', 'user')
-      localStorage.setItem('userEmail', 'google-user@example.com')
+      localStorage.setItem('userEmail', googleEmail)
+      localStorage.setItem('userName', 'Google User')
+      localStorage.setItem('userPhone', '01000000000')
       
       // Simulate successful login
       alert('✅ تم تسجيل الدخول بنجاح باستخدام Google!')
@@ -142,9 +156,12 @@ export default function LoginPage() {
       // In a real app, this would open Facebook OAuth popup/redirect
       console.log('Facebook Login initiated')
       
-      // حفظ نوع المستخدم
+      // حفظ نوع المستخدم وبياناته
+      const facebookEmail = 'facebook-user@example.com'
       localStorage.setItem('userType', 'user')
-      localStorage.setItem('userEmail', 'facebook-user@example.com')
+      localStorage.setItem('userEmail', facebookEmail)
+      localStorage.setItem('userName', 'Facebook User')
+      localStorage.setItem('userPhone', '01100000000')
       
       // Simulate successful login
       alert('✅ تم تسجيل الدخول بنجاح باستخدام Facebook!')

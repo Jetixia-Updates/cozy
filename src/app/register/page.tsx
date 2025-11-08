@@ -131,8 +131,14 @@ export default function RegisterPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
     
-    // Navigate to dashboard on success
-    router.push('/dashboard')
+    // حفظ بيانات المستخدم بعد التسجيل
+    localStorage.setItem('userType', 'user')
+    localStorage.setItem('userEmail', formData.email)
+    localStorage.setItem('userName', `${formData.firstName} ${formData.lastName}`)
+    localStorage.setItem('userPhone', formData.phone)
+    
+    // Navigate to user profile on success
+    router.push('/user/profile')
   }
 
   const getPasswordStrength = (password: string) => {
