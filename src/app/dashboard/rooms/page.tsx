@@ -96,6 +96,7 @@ export default function RoomsPage() {
   const [editingRoom, setEditingRoom] = useState<Room | null>(null)
   const [editingSeat, setEditingSeat] = useState<Seat | null>(null)
   const [loading, setLoading] = useState(true)
+  const [rooms, setRooms] = useState<Room[]>([])
 
   // Fetch rooms from API
   useEffect(() => {
