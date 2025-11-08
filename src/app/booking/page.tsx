@@ -494,32 +494,32 @@ export default function BookingPage() {
                   onClick={() => handleRoomSelect(room)}
                   className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl transition-all"
                 >
-                  <div className="bg-gradient-to-br from-primary-500 to-primary-700 p-6 text-white">
-                    <h3 className="text-2xl font-bold mb-2">{room.name}</h3>
-                    <p className="text-primary-100">{room.type}</p>
+                  <div className="bg-gradient-to-br from-primary-500 to-primary-700 p-4 sm:p-6 text-white">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">{room.name}</h3>
+                    <p className="text-primary-100 text-sm sm:text-base">{room.type}</p>
                   </div>
                   
-                  <div className="p-6">
-                    <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="p-4 sm:p-6">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
                       <div className="flex items-center space-x-reverse space-x-2 text-gray-600 dark:text-gray-400">
-                        <Users className="w-5 h-5" />
-                        <span>{room.capacity} {i18n.language === 'ar' ? 'شخص' : 'people'}</span>
+                        <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <span className="text-sm sm:text-base">{room.capacity} {i18n.language === 'ar' ? 'شخص' : 'people'}</span>
                       </div>
                       <div className="flex items-center space-x-reverse space-x-2 text-gray-600 dark:text-gray-400">
-                        <MapPin className="w-5 h-5" />
-                        <span>{i18n.language === 'ar' ? 'الطابق' : 'Floor'} {room.floor}</span>
+                        <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <span className="text-sm sm:text-base">{i18n.language === 'ar' ? 'الطابق' : 'Floor'} {room.floor}</span>
                       </div>
                     </div>
                     
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                       {room.amenities.map((amenity) => (
-                        <div key={amenity} className="flex items-center space-x-reverse space-x-1 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-lg text-sm">
+                        <div key={amenity} className="flex items-center space-x-reverse space-x-1 bg-gray-100 dark:bg-gray-700 px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm">
                           {getAmenityIcon(amenity)}
                         </div>
                       ))}
                     </div>
                     
-                    <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    <div className="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
                       {room.pricePerHour} {t('common.currency')} / {i18n.language === 'ar' ? 'ساعة' : 'hour'}
                     </div>
                   </div>
@@ -538,13 +538,13 @@ export default function BookingPage() {
               className="space-y-6"
             >
               {/* Room Info & Date/Time Selection */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
                       {selectedRoom.name}
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400">{selectedRoom.type}</p>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{selectedRoom.type}</p>
                   </div>
                   <button
                     onClick={() => {
@@ -552,7 +552,7 @@ export default function BookingPage() {
                       setSelectedRoom(null)
                       setSelectedSeats([])
                     }}
-                    className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition"
+                    className="px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition self-start sm:self-auto"
                   >
                     {i18n.language === 'ar' ? 'تغيير الغرفة' : 'Change Room'}
                   </button>
@@ -614,35 +614,35 @@ export default function BookingPage() {
               </div>
 
               {/* Seats Layout */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg p-3 sm:p-6">
                 {/* Screen */}
-                <div className="mb-8">
-                  <div className="bg-gradient-to-b from-gray-300 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-t-3xl py-3 text-center text-sm text-gray-600 dark:text-gray-300 font-medium">
+                <div className="mb-6 sm:mb-8">
+                  <div className="bg-gradient-to-b from-gray-300 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-t-2xl sm:rounded-t-3xl py-2 sm:py-3 text-center text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium">
                     {i18n.language === 'ar' ? 'الشاشة / المنصة' : 'Screen / Stage'}
                   </div>
                 </div>
 
                 {/* Legend */}
-                <div className="flex items-center justify-center space-x-reverse space-x-6 mb-6 text-sm">
-                  <div className="flex items-center space-x-reverse space-x-2">
-                    <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mb-4 sm:mb-6 text-xs sm:text-sm">
+                  <div className="flex items-center space-x-reverse space-x-1.5 sm:space-x-2">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-md sm:rounded-lg"></div>
                     <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'متاح' : 'Available'}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2">
-                    <div className="w-8 h-8 bg-primary-500 rounded-lg"></div>
+                  <div className="flex items-center space-x-reverse space-x-1.5 sm:space-x-2">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary-500 rounded-md sm:rounded-lg"></div>
                     <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'مختار' : 'Selected'}</span>
                   </div>
-                  <div className="flex items-center space-x-reverse space-x-2">
-                    <div className="w-8 h-8 bg-red-500 rounded-lg"></div>
+                  <div className="flex items-center space-x-reverse space-x-1.5 sm:space-x-2">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-red-500 rounded-md sm:rounded-lg"></div>
                     <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'محجوز' : 'Booked'}</span>
                   </div>
                 </div>
 
                 {/* Seats Grid */}
-                <div className="flex flex-col items-center space-y-3">
+                <div className="flex flex-col items-center space-y-2 sm:space-y-3 overflow-x-auto pb-2">
                   {Array.from(new Set(seats.map(s => s.row))).map((row) => (
-                    <div key={row} className="flex items-center space-x-reverse space-x-2">
-                      <span className="w-8 text-center font-bold text-gray-600 dark:text-gray-400">
+                    <div key={row} className="flex items-center space-x-reverse space-x-1.5 sm:space-x-2">
+                      <span className="w-6 sm:w-8 text-center font-bold text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         {row}
                       </span>
                       {seats
@@ -654,7 +654,7 @@ export default function BookingPage() {
                             whileTap={{ scale: seat.status !== 'booked' ? 0.9 : 1 }}
                             onClick={() => handleSeatClick(seat.id)}
                             disabled={seat.status === 'booked'}
-                            className={`relative w-12 h-12 rounded-lg font-medium text-sm transition-all group ${
+                            className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-md sm:rounded-lg font-medium text-xs sm:text-sm transition-all group ${
                               seat.status === 'available'
                                 ? 'bg-green-500 hover:bg-green-600 text-white cursor-pointer'
                                 : seat.status === 'selected'
@@ -664,7 +664,7 @@ export default function BookingPage() {
                           >
                             {seat.number}
                             {seat.status === 'booked' && seat.bookedUntil && (
-                              <div className="absolute hidden group-hover:block bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg whitespace-nowrap z-10">
+                              <div className="absolute hidden group-hover:block bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-900 text-white text-[10px] sm:text-xs rounded-lg whitespace-nowrap z-10">
                                 {formatTimeRemaining(seat.bookedUntil)}
                               </div>
                             )}
@@ -676,20 +676,20 @@ export default function BookingPage() {
               </div>
 
               {/* Summary & Continue */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">
+              <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                  <div className="space-y-2">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                       {i18n.language === 'ar' ? 'المقاعد المختارة:' : 'Selected Seats:'} <span className="font-bold text-gray-900 dark:text-white">{selectedSeats.join(', ') || (i18n.language === 'ar' ? 'لم يتم الاختيار' : 'None')}</span>
                     </p>
-                    <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    <p className="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
                       {i18n.language === 'ar' ? 'الإجمالي:' : 'Total:'} {getTotalPrice()} {t('common.currency')}
                     </p>
                   </div>
                   <button
                     onClick={handleProceedToDetails}
                     disabled={selectedSeats.length === 0 || !selectedDate || !selectedStartTime}
-                    className="px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium shadow-lg"
+                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium shadow-lg text-sm sm:text-base"
                   >
                     {i18n.language === 'ar' ? 'متابعة للخطوة التالية' : 'Continue to Next Step'}
                   </button>
@@ -707,12 +707,12 @@ export default function BookingPage() {
               exit={{ opacity: 0, x: -20 }}
               className="max-w-2xl mx-auto"
             >
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
                   {i18n.language === 'ar' ? 'بيانات العميل' : 'Customer Details'}
                 </h2>
 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       <User className="w-4 h-4 inline ml-2" />
@@ -758,16 +758,16 @@ export default function BookingPage() {
                   </div>
                 </div>
 
-                <div className="mt-8 flex gap-4">
+                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <button
                     onClick={() => setStep('seats')}
-                    className="flex-1 px-6 py-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition font-medium"
+                    className="w-full sm:flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition font-medium text-sm sm:text-base"
                   >
                     {i18n.language === 'ar' ? 'رجوع' : 'Back'}
                   </button>
                   <button
                     onClick={handleConfirmBooking}
-                    className="flex-1 px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 transition font-medium shadow-lg"
+                    className="w-full sm:flex-1 px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 transition font-medium shadow-lg text-sm sm:text-base"
                   >
                     {i18n.language === 'ar' ? 'تأكيد الحجز' : 'Confirm Booking'}
                   </button>
@@ -784,65 +784,67 @@ export default function BookingPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="max-w-2xl mx-auto"
             >
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center">
+              <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 text-center">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+                  className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6"
                 >
-                  <CheckCircle className="w-12 h-12 text-white" />
+                  <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
                 </motion.div>
 
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
                   {i18n.language === 'ar' ? 'تم تأكيد الحجز بنجاح!' : 'Booking Confirmed Successfully!'}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 px-2">
                   {i18n.language === 'ar' ? 'شكراً لك! تم إرسال تفاصيل الحجز إلى بريدك الإلكتروني' : 'Thank you! Booking details have been sent to your email'}
                   {isLoggedIn && (
-                    <span className="block mt-2 font-medium text-primary-600 dark:text-primary-400">
+                    <span className="block mt-2 font-medium text-primary-600 dark:text-primary-400 break-words">
                       {userEmail}
                     </span>
                   )}
                 </p>
                 
                 {isLoggedIn && (
-                  <div className="mb-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
-                    <p className="text-sm text-primary-800 dark:text-primary-200 flex items-center justify-center">
-                      <Info className="w-4 h-4 ml-2" />
-                      {i18n.language === 'ar' 
-                        ? 'سيتم توجيهك إلى صفحة حسابك خلال 3 ثواني...' 
-                        : 'You will be redirected to your account page in 3 seconds...'}
+                  <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
+                    <p className="text-xs sm:text-sm text-primary-800 dark:text-primary-200 flex items-center justify-center flex-wrap gap-1">
+                      <Info className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-center">
+                        {i18n.language === 'ar' 
+                          ? 'سيتم توجيهك إلى صفحة حسابك خلال 3 ثواني...' 
+                          : 'You will be redirected to your account page in 3 seconds...'}
+                      </span>
                     </p>
                   </div>
                 )}
 
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 text-right space-y-4 mb-8">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'رقم الحجز:' : 'Booking Number:'}</span>
-                    <span className="font-bold text-gray-900 dark:text-white">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg sm:rounded-xl p-4 sm:p-6 text-right space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex-shrink-0">{i18n.language === 'ar' ? 'رقم الحجز:' : 'Booking Number:'}</span>
+                    <span className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white break-all text-left">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'الغرفة:' : 'Room:'}</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{selectedRoom.name}</span>
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex-shrink-0">{i18n.language === 'ar' ? 'الغرفة:' : 'Room:'}</span>
+                    <span className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white text-left">{selectedRoom.name}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'المقاعد:' : 'Seats:'}</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{selectedSeats.join(', ')}</span>
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex-shrink-0">{i18n.language === 'ar' ? 'المقاعد:' : 'Seats:'}</span>
+                    <span className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white text-left break-words">{selectedSeats.join(', ')}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'التاريخ:' : 'Date:'}</span>
-                    <span className="font-bold text-gray-900 dark:text-white">{selectedDate}</span>
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex-shrink-0">{i18n.language === 'ar' ? 'التاريخ:' : 'Date:'}</span>
+                    <span className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white text-left">{selectedDate}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'الوقت:' : 'Time:'}</span>
-                    <span className="font-bold text-gray-900 dark:text-white">
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex-shrink-0">{i18n.language === 'ar' ? 'الوقت:' : 'Time:'}</span>
+                    <span className="font-bold text-xs sm:text-sm text-gray-900 dark:text-white text-left">
                       {selectedStartTime} - {calculateEndTime(selectedStartTime, selectedDuration)}
                     </span>
                   </div>
-                  <div className="flex justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
-                    <span className="text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'المبلغ الإجمالي:' : 'Total Amount:'}</span>
-                    <span className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                  <div className="flex justify-between items-start gap-2 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-600">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex-shrink-0">{i18n.language === 'ar' ? 'المبلغ الإجمالي:' : 'Total Amount:'}</span>
+                    <span className="text-lg sm:text-2xl font-bold text-primary-600 dark:text-primary-400 text-left">
                       {getTotalPrice()} {t('common.currency')}
                     </span>
                   </div>
@@ -850,7 +852,7 @@ export default function BookingPage() {
 
                 <Link
                   href="/"
-                  className="inline-block px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 transition font-medium shadow-lg"
+                  className="inline-block w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 transition font-medium shadow-lg text-sm sm:text-base"
                 >
                   {t('booking.backToHome')}
                 </Link>
