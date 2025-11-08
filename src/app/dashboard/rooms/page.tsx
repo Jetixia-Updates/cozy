@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { motion } from 'framer-motion'
@@ -95,9 +95,51 @@ export default function RoomsPage() {
   const [activeTab, setActiveTab] = useState<'rooms' | 'seats'>('rooms')
   const [editingRoom, setEditingRoom] = useState<Room | null>(null)
   const [editingSeat, setEditingSeat] = useState<Seat | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  // Sample rooms data - converted to state for dynamic updates
-  const [rooms, setRooms] = useState<Room[]>([
+  // Fetch rooms from API
+  useEffect(() => {
+    fetchRooms()
+  }, [filterStatus, filterType])
+
+  const fetchRooms = async () => {
+    try {
+      setLoading(true)
+      const params = new URLSearchParams()
+      if (filterStatus !== 'all') params.append('status', filterStatus.toUpperCase())
+      if (filterType !== 'all') params.append('type', filterType)
+      
+      const response = await fetch(`/api/rooms?${params}`)
+      const data = await response.json()
+      
+      if (data.success) {
+        const transformedRooms = data.data.map((room: any) => ({
+          id: room.id,
+          name: room.name,
+          type: 'meeting-room',
+          floor: room.floor,
+          area: room.area,
+          capacity: room.capacity,
+          pricePerHour: room.pricePerHour,
+          pricePerDay: room.pricePerDay,
+          pricePerMonth: room.pricePerMonth,
+          status: room.status.toLowerCase(),
+          amenities: room.amenities || [],
+          images: [],
+          description: room.description || '',
+          occupancyRate: 0,
+        }))
+        setRooms(transformedRooms)
+      }
+    } catch (error) {
+      console.error('Error fetching rooms:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Old mock data - converted to state for dynamic updates
+  const _mockRooms = [
     {
       id: '1',
       name: 'غرفة 1',

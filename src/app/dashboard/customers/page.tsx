@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
@@ -70,9 +70,51 @@ export default function CustomersPage() {
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [showNewCustomerModal, setShowNewCustomerModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
+  const [customers, setCustomers] = useState<Customer[]>([])
+  const [loading, setLoading] = useState(true)
 
-  // Sample customers data
-  const customers: Customer[] = [
+  // Fetch customers from API
+  useEffect(() => {
+    fetchCustomers()
+  }, [filterStatus, filterMembership])
+
+  const fetchCustomers = async () => {
+    try {
+      setLoading(true)
+      const params = new URLSearchParams()
+      if (filterStatus !== 'all') params.append('status', filterStatus)
+      if (filterMembership !== 'all') params.append('membershipType', filterMembership.toUpperCase())
+      
+      const response = await fetch(`/api/users?role=CUSTOMER&${params}`)
+      const data = await response.json()
+      
+      if (data.success) {
+        const transformedCustomers = data.data.map((user: any) => ({
+          id: user.id,
+          name: `${user.firstName} ${user.lastName}`,
+          email: user.email,
+          phone: user.phone || '',
+          nationalId: '',
+          address: '',
+          membershipType: user.membershipType.toLowerCase(),
+          joinDate: new Date(user.createdAt).toISOString().split('T')[0],
+          lastVisit: new Date(user.updatedAt).toISOString().split('T')[0],
+          totalBookings: user.totalBookings || 0,
+          totalSpent: user.totalSpent || 0,
+          loyaltyPoints: user.loyaltyPoints || 0,
+          status: 'active',
+        }))
+        setCustomers(transformedCustomers)
+      }
+    } catch (error) {
+      console.error('Error fetching customers:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Old mock data removed
+  const _mockCustomers: Customer[] = [
     {
       id: '1',
       name: 'أحمد محمد السعيد',

@@ -64,9 +64,89 @@ export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selectedPeriod, setSelectedPeriod] = useState('today')
+  const [recentBookings, setRecentBookings] = useState<Booking[]>([])
+  const [stats, setStats] = useState<StatCard[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch dashboard data
+  useEffect(() => {
+    fetchDashboardData()
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true)
+      const [bookingsRes, usersRes, roomsRes] = await Promise.all([
+        fetch('/api/bookings'),
+        fetch('/api/users?role=CUSTOMER'),
+        fetch('/api/rooms')
+      ])
+
+      const bookingsData = await bookingsRes.json()
+      const usersData = await usersRes.json()
+      const roomsData = await roomsRes.json()
+
+      // Calculate stats
+      const totalBookings = bookingsData.data?.length || 0
+      const activeMembers = usersData.data?.length || 0
+      const totalRevenue = bookingsData.data?.reduce((sum: number, b: any) => sum + (b.totalAmount || 0), 0) || 0
+      const totalRooms = roomsData.data?.length || 0
+      const occupiedRooms = roomsData.data?.filter((r: any) => r.status === 'OCCUPIED').length || 0
+      const occupancyRate = totalRooms > 0 ? Math.round((occupiedRooms / totalRooms) * 100) : 0
+
+      setStats([
+        {
+          title: t('dashboard.totalBookings'),
+          value: totalBookings,
+          change: 12.5,
+          icon: Calendar,
+          color: 'bg-primary-500'
+        },
+        {
+          title: t('dashboard.activeMembers'),
+          value: activeMembers,
+          change: 8.2,
+          icon: Users,
+          color: 'bg-green-500'
+        },
+        {
+          title: t('dashboard.monthlyRevenue'),
+          value: `${totalRevenue.toLocaleString()} ${t('common.currency')}`,
+          change: -3.4,
+          icon: DollarSign,
+          color: 'bg-purple-500'
+        },
+        {
+          title: t('dashboard.occupancyRate'),
+          value: `${occupancyRate}%`,
+          change: 5.1,
+          icon: Activity,
+          color: 'bg-orange-500'
+        }
+      ])
+
+      // Transform recent bookings
+      if (bookingsData.success && bookingsData.data) {
+        const transformed = bookingsData.data.slice(0, 4).map((b: any) => ({
+          id: b.id,
+          customerName: `${b.user.firstName} ${b.user.lastName}`,
+          roomType: b.room.type,
+          date: new Date(b.date).toISOString().split('T')[0],
+          time: `${b.startTime} - ${b.endTime}`,
+          status: b.status.toLowerCase(),
+          amount: b.totalAmount
+        }))
+        setRecentBookings(transformed)
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
   
-  // Sample data
-  const stats: StatCard[] = [
+  // Old mock data
+  const _mockStats: StatCard[] = [
     {
       title: t('dashboard.totalBookings'),
       value: '156',
@@ -97,7 +177,7 @@ export default function DashboardPage() {
     }
   ]
 
-  const recentBookings: Booking[] = [
+  const _mockRecentBookings: Booking[] = [
     {
       id: '1',
       customerName: 'أحمد محمد',
