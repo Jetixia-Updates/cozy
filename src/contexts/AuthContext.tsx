@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { authAPI } from '@/lib/api';
+import { authAPI, userAPI } from '@/lib/api';
 import io, { Socket } from 'socket.io-client';
 
 interface User {
@@ -100,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const token = localStorage.getItem('accessToken');
         if (token) {
-          const response = await authAPI.getProfile();
+          const response = await userAPI.getProfile();
           setUser(response.data);
           initializeSocket(token);
         }
