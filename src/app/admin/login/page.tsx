@@ -124,14 +124,14 @@ export default function AdminLoginPage() {
           </p>
           
           {/* Admin Credentials Info */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 text-sm">
+          <div className="bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-xl p-4 text-sm">
             <div className="flex items-start space-x-reverse space-x-2">
-              <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+              <Info className="w-5 h-5 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <p className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+                <p className="font-semibold text-primary-900 dark:text-primary-100 mb-2">
                   {i18n.language === 'ar' ? 'بيانات تسجيل الدخول:' : 'Admin Credentials:'}
                 </p>
-                <div className="space-y-1 text-blue-800 dark:text-blue-200">
+                <div className="space-y-1 text-primary-800 dark:text-primary-200">
                   <p className="font-mono">
                     <span className="font-semibold">{i18n.language === 'ar' ? 'البريد:' : 'Email:'}</span> admin@cozyhive.eg
                   </p>

@@ -209,7 +209,7 @@ export default function BookingsPage() {
     switch (status) {
       case 'confirmed': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
       case 'pending': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-      case 'completed': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
+      case 'completed': return 'bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-400'
       case 'cancelled': return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
       case 'no-show': return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400'
       default: return 'bg-gray-100 text-gray-800'
@@ -349,8 +349,8 @@ export default function BookingsPage() {
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">156</p>
                 <p className="text-xs text-green-600 dark:text-green-400 mt-1">{i18n.language === 'ar' ? '+12% من الشهر السابق' : '+12% from last month'}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center">
+                <Calendar className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
             </div>
           </motion.div>
@@ -588,7 +588,7 @@ export default function BookingsPage() {
                       </button>
                       <button 
                         onClick={() => handleEditBooking(booking)}
-                        className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                        className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
                         title="تعديل"
                       >
                         <Edit className="w-4 h-4" />
@@ -791,7 +791,7 @@ export default function BookingsPage() {
                   handleEditBooking(selectedBooking)
                   setShowDetailsModal(false)
                 }}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
               >
                 تعديل الحجز
               </button>

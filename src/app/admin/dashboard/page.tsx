@@ -67,7 +67,7 @@ export default function AdminDashboardPage() {
       value: '2,845',
       change: 8.2,
       icon: Calendar,
-      color: 'bg-blue-500'
+      color: 'bg-primary-500'
     },
     {
       title: i18n.language === 'ar' ? 'العملاء النشطين' : 'Active Users',

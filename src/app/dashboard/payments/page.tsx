@@ -181,7 +181,7 @@ export default function PaymentsPage() {
     switch (status) {
       case 'completed': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
       case 'pending': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-      case 'processing': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
+      case 'processing': return 'bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-400'
       case 'failed': return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
       case 'refunded': return 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400'
       default: return 'bg-gray-100 text-gray-800'
@@ -386,11 +386,11 @@ export default function PaymentsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'معاملات اليوم' : 'Today\'s Transactions'}</p>
-                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{todayTransactions}</p>
+                <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">{todayTransactions}</p>
                 <p className="text-xs text-gray-500 mt-1">{i18n.language === 'ar' ? 'معاملة جديدة' : 'new transactions'}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
-                <CreditCard className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center">
+                <CreditCard className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
             </div>
           </motion.div>
@@ -571,7 +571,7 @@ export default function PaymentsPage() {
                         <Eye className="w-4 h-4" />
                       </button>
                       {payment.invoice && (
-                        <button className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                        <button className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
                           <FileText className="w-4 h-4" />
                         </button>
                       )}

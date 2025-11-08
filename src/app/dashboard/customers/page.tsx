@@ -249,8 +249,8 @@ export default function CustomersPage() {
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">1,234</p>
                 <p className="text-xs text-green-600 dark:text-green-400 mt-1">{i18n.language === 'ar' ? '+8% من الشهر السابق' : '+8% from last month'}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center">
+                <Users className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               </div>
             </div>
           </motion.div>
@@ -461,7 +461,7 @@ export default function CustomersPage() {
                       >
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                      <button className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
                         <Edit className="w-4 h-4" />
                       </button>
                       <button className="text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400">
@@ -473,7 +473,7 @@ export default function CustomersPage() {
                         </button>
                         <div className="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
                           <button className="w-full text-right px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex items-center">
-                            <History className="w-4 h-4 ml-2 text-blue-600" />
+                            <History className="w-4 h-4 ml-2 text-primary-600" />
                             سجل الحجوزات
                           </button>
                           <button className="w-full text-right px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex items-center">

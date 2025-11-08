@@ -437,7 +437,7 @@ export default function RegisterPage() {
                             passwordStrength >= level
                               ? level <= 1 ? 'bg-red-500' 
                               : level <= 2 ? 'bg-yellow-500'
-                              : level <= 3 ? 'bg-blue-500'
+                              : level <= 3 ? 'bg-primary-500'
                               : 'bg-green-500'
                               : 'bg-gray-200 dark:bg-gray-700'
                           }`}
