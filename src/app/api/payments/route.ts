@@ -53,13 +53,18 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
+    // Generate unique transaction ID if not provided
+    const transactionId = data.transactionId || `TXN-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+
     const newPayment = await prisma.payment.create({
       data: {
+        userId: data.userId,
         bookingId: data.bookingId,
         amount: data.amount,
         method: data.method || 'CASH',
         status: data.status || 'PENDING',
-        transactionId: data.transactionId,
+        transactionId,
+        currency: data.currency || 'EGP',
         notes: data.notes,
       },
       include: {
@@ -99,10 +104,11 @@ export async function PATCH(request: NextRequest) {
     const updatedPayment = await prisma.payment.update({
       where: { id },
       data: {
+        userId: data.userId,
         amount: data.amount,
         method: data.method,
         status: data.status,
-        transactionId: data.transactionId,
+        currency: data.currency,
         notes: data.notes,
       },
       include: {
