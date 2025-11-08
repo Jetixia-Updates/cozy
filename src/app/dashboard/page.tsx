@@ -190,13 +190,13 @@ export default function DashboardPage() {
   }
 
   const getStatusText = (status: string) => {
-    switch (status) {
-      case 'confirmed': return 'مؤكد'
-      case 'pending': return 'قيد الانتظار'
-      case 'completed': return 'مكتمل'
-      case 'cancelled': return 'ملغي'
-      default: return status
+    const statusMap: Record<string, { ar: string; en: string }> = {
+      'confirmed': { ar: 'مؤكد', en: 'Confirmed' },
+      'pending': { ar: 'قيد الانتظار', en: 'Pending' },
+      'completed': { ar: 'مكتمل', en: 'Completed' },
+      'cancelled': { ar: 'ملغي', en: 'Cancelled' }
     }
+    return statusMap[status]?.[i18n.language === 'ar' ? 'ar' : 'en'] || status
   }
 
   return (
@@ -377,9 +377,9 @@ export default function DashboardPage() {
                     onChange={(e) => setSelectedPeriod(e.target.value)}
                     className="px-3 py-1 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm"
                   >
-                    <option value="today">اليوم</option>
-                    <option value="week">هذا الأسبوع</option>
-                    <option value="month">هذا الشهر</option>
+                    <option value="today">{i18n.language === 'ar' ? 'اليوم' : 'Today'}</option>
+                    <option value="week">{i18n.language === 'ar' ? 'هذا الأسبوع' : 'This Week'}</option>
+                    <option value="month">{i18n.language === 'ar' ? 'هذا الشهر' : 'This Month'}</option>
                   </select>
                   <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
                     <Filter className="w-4 h-4" />
@@ -411,25 +411,25 @@ export default function DashboardPage() {
                 <thead className="bg-gray-50 dark:bg-gray-700/50">
                   <tr>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      العميل
+                      {t('dashboard.customer')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      نوع الغرفة
+                      {t('dashboard.room')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      التاريخ
+                      {t('dashboard.date')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      الوقت
+                      {i18n.language === 'ar' ? 'الوقت' : 'Time'}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      الحالة
+                      {t('dashboard.status')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      المبلغ
+                      {t('dashboard.amount')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      إجراءات
+                      {t('dashboard.actions')}
                     </th>
                   </tr>
                 </thead>
@@ -462,7 +462,7 @@ export default function DashboardPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                        {booking.amount} ج.م
+                        {booking.amount} {t('common.currency')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <button className="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300">
@@ -478,12 +478,15 @@ export default function DashboardPage() {
             {/* Pagination */}
             <div className="px-6 py-4 border-t dark:border-gray-700 flex items-center justify-between">
               <p className="text-sm text-gray-700 dark:text-gray-400">
-                عرض <span className="font-medium">1</span> إلى <span className="font-medium">4</span> من{' '}
-                <span className="font-medium">20</span> نتيجة
+                {i18n.language === 'ar' ? (
+                  <>عرض <span className="font-medium">1</span> إلى <span className="font-medium">4</span> من{' '}<span className="font-medium">20</span> نتيجة</>
+                ) : (
+                  <>Showing <span className="font-medium">1</span> to <span className="font-medium">4</span> of{' '}<span className="font-medium">20</span> results</>
+                )}
               </p>
               <div className="flex space-x-reverse space-x-2">
                 <button className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700">
-                  السابق
+                  {i18n.language === 'ar' ? 'السابق' : 'Previous'}
                 </button>
                 <button className="px-3 py-1 bg-primary-600 text-white rounded-lg text-sm">1</button>
                 <button className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -493,7 +496,7 @@ export default function DashboardPage() {
                   3
                 </button>
                 <button className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700">
-                  التالي
+                  {i18n.language === 'ar' ? 'التالي' : 'Next'}
                 </button>
               </div>
             </div>

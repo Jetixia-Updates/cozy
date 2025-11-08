@@ -228,14 +228,14 @@ export default function RoomsPage() {
   })
 
   const getRoomTypeText = (type: string) => {
-    const typeMap: Record<string, string> = {
-      'meeting-room': 'قاعة اجتماعات',
-      'private-office': 'مكتب خاص',
-      'shared-space': 'مساحة مشتركة',
-      'training-room': 'قاعة تدريب',
-      'conference-hall': 'قاعة مؤتمرات'
+    const typeMap: Record<string, { ar: string; en: string }> = {
+      'meeting-room': { ar: 'قاعة اجتماعات', en: 'Meeting Room' },
+      'private-office': { ar: 'مكتب خاص', en: 'Private Office' },
+      'shared-space': { ar: 'مساحة مشتركة', en: 'Shared Space' },
+      'training-room': { ar: 'قاعة تدريب', en: 'Training Room' },
+      'conference-hall': { ar: 'قاعة مؤتمرات', en: 'Conference Hall' }
     }
-    return typeMap[type] || type
+    return typeMap[type]?.[i18n.language === 'ar' ? 'ar' : 'en'] || type
   }
 
   const getStatusColor = (status: string) => {
@@ -249,13 +249,13 @@ export default function RoomsPage() {
   }
 
   const getStatusText = (status: string) => {
-    const statusMap: Record<string, string> = {
-      'available': 'متاح',
-      'occupied': 'مشغول',
-      'maintenance': 'صيانة',
-      'reserved': 'محجوز'
+    const statusMap: Record<string, { ar: string; en: string }> = {
+      'available': { ar: 'متاح', en: 'Available' },
+      'occupied': { ar: 'مشغول', en: 'Occupied' },
+      'maintenance': { ar: 'صيانة', en: 'Maintenance' },
+      'reserved': { ar: 'محجوز', en: 'Reserved' }
     }
-    return statusMap[status] || status
+    return statusMap[status]?.[i18n.language === 'ar' ? 'ar' : 'en'] || status
   }
 
   const getStatusIcon = (status: string) => {
@@ -334,7 +334,7 @@ export default function RoomsPage() {
       description: '',
       occupancyRate: 0
     })
-    alert('تم إضافة الغرفة بنجاح!')
+    alert(t('rooms.roomAdded'))
   }
 
   const handleEditRoom = (e: React.FormEvent) => {
@@ -346,13 +346,13 @@ export default function RoomsPage() {
     ))
     setShowEditModal(false)
     setEditingRoom(null)
-    alert('تم تحديث الغرفة بنجاح!')
+    alert(t('rooms.roomUpdated'))
   }
 
   const handleDeleteRoom = (roomId: string) => {
-    if (confirm('هل أنت متأكد من حذف هذه الغرفة؟')) {
+    if (confirm(t('rooms.deleteConfirm'))) {
       setRooms(rooms.filter(room => room.id !== roomId))
-      alert('تم حذف الغرفة بنجاح!')
+      alert(t('rooms.roomDeleted'))
     }
   }
 
@@ -365,7 +365,7 @@ export default function RoomsPage() {
     ))
     setShowEditSeatModal(false)
     setEditingSeat(null)
-    alert('تم تحديث المقعد بنجاح!')
+    alert(t('rooms.seats.seatUpdated'))
   }
 
   const handleAmenityToggle = (amenity: string, isNewRoom: boolean = true) => {
@@ -419,7 +419,7 @@ export default function RoomsPage() {
       amenities: [],
       currentUser: ''
     })
-    alert('تم إضافة المقعد بنجاح!')
+    alert(t('rooms.seats.seatAdded'))
   }
 
   return (
@@ -461,9 +461,9 @@ export default function RoomsPage() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">إجمالي الغرف</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'إجمالي الغرف' : 'Total Rooms'}</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">45</p>
-                <p className="text-xs text-gray-500 mt-1">5 طوابق</p>
+                <p className="text-xs text-gray-500 mt-1">{i18n.language === 'ar' ? '5 طوابق' : '5 floors'}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
                 <Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -479,9 +479,9 @@ export default function RoomsPage() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">غرف متاحة</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'غرف متاحة' : 'Available Rooms'}</p>
                 <p className="text-2xl font-bold text-green-600 dark:text-green-400">28</p>
-                <p className="text-xs text-gray-500 mt-1">62% من الإجمالي</p>
+                <p className="text-xs text-gray-500 mt-1">{i18n.language === 'ar' ? '62% من الإجمالي' : '62% of total'}</p>
               </div>
               <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center">
                 <Unlock className="w-6 h-6 text-green-600 dark:text-green-400" />
@@ -497,9 +497,9 @@ export default function RoomsPage() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">غرف مشغولة</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'غرف مشغولة' : 'Occupied Rooms'}</p>
                 <p className="text-2xl font-bold text-red-600 dark:text-red-400">15</p>
-                <p className="text-xs text-gray-500 mt-1">33% من الإجمالي</p>
+                <p className="text-xs text-gray-500 mt-1">{i18n.language === 'ar' ? '33% من الإجمالي' : '33% of total'}</p>
               </div>
               <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
                 <Lock className="w-6 h-6 text-red-600 dark:text-red-400" />
@@ -515,9 +515,9 @@ export default function RoomsPage() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">تحت الصيانة</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'تحت الصيانة' : 'Under Maintenance'}</p>
                 <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">2</p>
-                <p className="text-xs text-gray-500 mt-1">5% من الإجمالي</p>
+                <p className="text-xs text-gray-500 mt-1">{i18n.language === 'ar' ? '5% من الإجمالي' : '5% of total'}</p>
               </div>
               <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl flex items-center justify-center">
                 <Settings className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
@@ -533,9 +533,9 @@ export default function RoomsPage() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">نسبة الإشغال</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{i18n.language === 'ar' ? 'نسبة الإشغال' : 'Occupancy Rate'}</p>
                 <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">78%</p>
-                <p className="text-xs text-green-600 dark:text-green-400 mt-1">+5% من الشهر السابق</p>
+                <p className="text-xs text-green-600 dark:text-green-400 mt-1">{i18n.language === 'ar' ? '+5% من الشهر السابق' : '+5% from previous month'}</p>
               </div>
               <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center">
                 <Activity className="w-6 h-6 text-purple-600 dark:text-purple-400" />
@@ -555,7 +555,7 @@ export default function RoomsPage() {
             }`}
           >
             <Building2 className="w-4 h-4 inline-block ml-2" />
-            الغرف
+            {t('rooms.tabs.rooms')}
           </button>
           <button
             onClick={() => setActiveTab('seats')}
@@ -566,7 +566,7 @@ export default function RoomsPage() {
             }`}
           >
             <Users className="w-4 h-4 inline-block ml-2" />
-            المقاعد
+            {t('rooms.tabs.seats')}
           </button>
         </div>
 
@@ -581,7 +581,7 @@ export default function RoomsPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="بحث بالاسم أو الوصف..."
+                  placeholder={t('rooms.searchPlaceholder')}
                   className="w-full pr-10 pl-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
@@ -595,12 +595,12 @@ export default function RoomsPage() {
                   onChange={(e) => setFilterType(e.target.value)}
                   className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500"
                 >
-                  <option value="all">جميع الأنواع</option>
-                  <option value="meeting-room">قاعة اجتماعات</option>
-                  <option value="private-office">مكتب خاص</option>
-                  <option value="shared-space">مساحة مشتركة</option>
-                  <option value="training-room">قاعة تدريب</option>
-                  <option value="conference-hall">قاعة مؤتمرات</option>
+                  <option value="all">{t('rooms.allTypes')}</option>
+                  <option value="meeting-room">{t('rooms.meetingRoom')}</option>
+                  <option value="private-office">{t('rooms.privateOffice')}</option>
+                  <option value="shared-space">{t('rooms.sharedSpace')}</option>
+                  <option value="training-room">{t('rooms.trainingRoom')}</option>
+                  <option value="conference-hall">{t('rooms.conferenceHall')}</option>
                 </select>
 
                 {/* Status Filter */}
@@ -609,11 +609,11 @@ export default function RoomsPage() {
                   onChange={(e) => setFilterStatus(e.target.value)}
                   className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500"
                 >
-                  <option value="all">جميع الحالات</option>
-                  <option value="available">متاح</option>
-                  <option value="occupied">مشغول</option>
-                  <option value="maintenance">صيانة</option>
-                  <option value="reserved">محجوز</option>
+                  <option value="all">{t('rooms.allStatus')}</option>
+                  <option value="available">{t('rooms.available')}</option>
+                  <option value="occupied">{t('rooms.occupied')}</option>
+                  <option value="maintenance">{t('rooms.maintenance')}</option>
+                  <option value="reserved">{t('rooms.reserved')}</option>
                 </select>
 
                 {/* Floor Filter */}
@@ -622,10 +622,10 @@ export default function RoomsPage() {
                   onChange={(e) => setFilterFloor(e.target.value)}
                   className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500"
                 >
-                  <option value="all">جميع الطوابق</option>
-                  <option value="1">الطابق الأول</option>
-                  <option value="2">الطابق الثاني</option>
-                  <option value="3">الطابق الثالث</option>
+                  <option value="all">{t('rooms.allFloors')}</option>
+                  <option value="1">{t('rooms.firstFloor')}</option>
+                  <option value="2">{t('rooms.secondFloor')}</option>
+                  <option value="3">{t('rooms.thirdFloor')}</option>
                 </select>
               </>
             )}
@@ -688,32 +688,32 @@ export default function RoomsPage() {
                 <div className="p-4">
                   <div className="grid grid-cols-3 gap-2 mb-4">
                     <div className="text-center">
-                      <p className="text-xs text-gray-500 dark:text-gray-400">الطابق</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{t('rooms.floor')}</p>
                       <p className="text-sm font-medium text-gray-900 dark:text-white">{room.floor}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xs text-gray-500 dark:text-gray-400">السعة</p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">{room.capacity} شخص</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{t('rooms.capacity')}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">{room.capacity} {t('rooms.people')}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xs text-gray-500 dark:text-gray-400">المساحة</p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">{room.area} م²</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{t('rooms.area')}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">{room.area} {t('rooms.sqm')}</p>
                     </div>
                   </div>
 
                   {/* Pricing */}
                   <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 mb-4">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">بالساعة</span>
-                      <span className="text-sm font-bold text-gray-900 dark:text-white">{room.pricePerHour} ج.م</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{t('rooms.pricePerHour')}</span>
+                      <span className="text-sm font-bold text-gray-900 dark:text-white">{room.pricePerHour} {t('common.currency')}</span>
                     </div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">باليوم</span>
-                      <span className="text-sm font-bold text-gray-900 dark:text-white">{room.pricePerDay} ج.م</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{t('rooms.pricePerDay')}</span>
+                      <span className="text-sm font-bold text-gray-900 dark:text-white">{room.pricePerDay} {t('common.currency')}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">بالشهر</span>
-                      <span className="text-sm font-bold text-gray-900 dark:text-white">{room.pricePerMonth.toLocaleString()} ج.م</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{t('rooms.pricePerMonth')}</span>
+                      <span className="text-sm font-bold text-gray-900 dark:text-white">{room.pricePerMonth.toLocaleString()} {t('common.currency')}</span>
                     </div>
                   </div>
 
@@ -732,7 +732,7 @@ export default function RoomsPage() {
                   {/* Occupancy Rate */}
                   <div className="mb-4">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs text-gray-600 dark:text-gray-400">نسبة الإشغال</span>
+                      <span className="text-xs text-gray-600 dark:text-gray-400">{t('rooms.occupancyRate')}</span>
                       <span className="text-xs font-medium text-gray-900 dark:text-white">{room.occupancyRate}%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -753,7 +753,7 @@ export default function RoomsPage() {
                       className="flex-1 px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm font-medium flex items-center justify-center gap-1"
                     >
                       <Eye className="w-4 h-4" />
-                      <span>عرض</span>
+                      <span>{t('rooms.viewDetails')}</span>
                     </button>
                     <button
                       onClick={() => {
@@ -783,28 +783,28 @@ export default function RoomsPage() {
                 <thead className="bg-gray-50 dark:bg-gray-700/50">
                   <tr>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      الغرفة
+                      {i18n.language === 'ar' ? 'الغرفة' : 'Room'}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      النوع
+                      {i18n.language === 'ar' ? 'النوع' : 'Type'}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      الطابق
+                      {t('rooms.floor')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      السعة
+                      {t('rooms.capacity')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      السعر/ساعة
+                      {t('rooms.pricePerHour')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      الإشغال
+                      {t('rooms.occupancyRate')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      الحالة
+                      {t('rooms.status')}
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      إجراءات
+                      {i18n.language === 'ar' ? 'إجراءات' : 'Actions'}
                     </th>
                   </tr>
                 </thead>
@@ -826,13 +826,13 @@ export default function RoomsPage() {
                         <span className="text-sm text-gray-900 dark:text-white">{getRoomTypeText(room.type)}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900 dark:text-white">الطابق {room.floor}</span>
+                        <span className="text-sm text-gray-900 dark:text-white">{i18n.language === 'ar' ? `الطابق ${room.floor}` : `Floor ${room.floor}`}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900 dark:text-white">{room.capacity} شخص</span>
+                        <span className="text-sm text-gray-900 dark:text-white">{room.capacity} {t('rooms.people')}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">{room.pricePerHour} ج.م</span>
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">{room.pricePerHour} {t('common.currency')}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -891,10 +891,12 @@ export default function RoomsPage() {
         ) : (
           /* Floor View */
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">عرض الطوابق</h3>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">{t('rooms.floorView')}</h3>
             {[1, 2, 3].map((floor) => (
               <div key={floor} className="mb-6 last:mb-0">
-                <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">الطابق {floor}</h4>
+                <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  {i18n.language === 'ar' ? `الطابق ${floor}` : `Floor ${floor}`}
+                </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                   {filteredRooms.filter(room => room.floor === floor).map((room) => (
                     <div
@@ -910,7 +912,7 @@ export default function RoomsPage() {
                       }`}
                     >
                       <p className="text-xs font-bold text-gray-900 dark:text-white">{room.name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{room.capacity} شخص</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{room.capacity} {t('rooms.people')}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">{getStatusText(room.status)}</p>
                     </div>
                   ))}
@@ -924,13 +926,13 @@ export default function RoomsPage() {
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
           <div className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">المقاعد في المساحة المشتركة</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('rooms.seats.title')}</h3>
               <button
                 onClick={() => setShowNewSeatModal(true)}
                 className="px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 flex items-center space-x-reverse space-x-2 shadow"
               >
                 <Plus className="w-4 h-4" />
-                <span>إضافة مقعد</span>
+                <span>{t('rooms.seats.addSeat')}</span>
               </button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -955,18 +957,18 @@ export default function RoomsPage() {
                         setShowEditSeatModal(true)
                       }}
                       className="p-1 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded hover:bg-blue-200 dark:hover:bg-blue-900/70"
-                      title="تعديل"
+                      title={t('rooms.edit')}
                     >
                       <Edit className="w-3 h-3" />
                     </button>
                     <button
                       onClick={() => {
-                        if (confirm(`هل تريد حذف المقعد ${seat.seatNumber}؟`)) {
+                        if (confirm(`${t('rooms.seats.deleteSeatConfirm')} ${seat.seatNumber}؟`)) {
                           setSeats(seats.filter(s => s.id !== seat.id))
                         }
                       }}
                       className="p-1 bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 rounded hover:bg-red-200 dark:hover:bg-red-900/70"
-                      title="حذف"
+                      title={t('rooms.delete')}
                     >
                       <Trash2 className="w-3 h-3" />
                     </button>
@@ -975,9 +977,9 @@ export default function RoomsPage() {
                   <div className="text-center mt-4">
                     <p className="text-lg font-bold text-gray-900 dark:text-white">{seat.seatNumber}</p>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                      {seat.type === 'premium' ? 'متميز' : seat.type === 'executive' ? 'تنفيذي' : 'عادي'}
+                      {seat.type === 'premium' ? t('rooms.seats.premium') : seat.type === 'executive' ? t('rooms.seats.executive') : t('rooms.seats.standard')}
                     </p>
-                    <p className="text-xs font-medium text-gray-900 dark:text-white mt-2">{seat.pricePerHour} ج.م/ساعة</p>
+                    <p className="text-xs font-medium text-gray-900 dark:text-white mt-2">{seat.pricePerHour} {t('common.currency')}/{i18n.language === 'ar' ? 'ساعة' : 'hour'}</p>
                     <p className={`text-xs mt-2 ${
                       seat.status === 'available' 
                         ? 'text-green-600 dark:text-green-400' 
@@ -1011,7 +1013,7 @@ export default function RoomsPage() {
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">تفاصيل الغرفة</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('rooms.roomDetails')}</h2>
                 <button
                   onClick={() => setShowDetailsModal(false)}
                   className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
@@ -1028,43 +1030,43 @@ export default function RoomsPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">الطابق</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('rooms.floor')}</p>
                     <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedRoom.floor}</p>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">المساحة</p>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedRoom.area} م²</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('rooms.area')}</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedRoom.area} {t('rooms.sqm')}</p>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">السعة</p>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedRoom.capacity} شخص</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('rooms.capacity')}</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedRoom.capacity} {t('rooms.people')}</p>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">نسبة الإشغال</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('rooms.occupancyRate')}</p>
                     <p className="text-lg font-bold text-gray-900 dark:text-white">{selectedRoom.occupancyRate}%</p>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">الأسعار</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t('rooms.pricing')}</p>
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-gray-700 dark:text-gray-300">بالساعة</span>
-                      <span className="font-bold text-gray-900 dark:text-white">{selectedRoom.pricePerHour} ج.م</span>
+                      <span className="text-gray-700 dark:text-gray-300">{t('rooms.pricePerHour')}</span>
+                      <span className="font-bold text-gray-900 dark:text-white">{selectedRoom.pricePerHour} {t('common.currency')}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-700 dark:text-gray-300">باليوم</span>
-                      <span className="font-bold text-gray-900 dark:text-white">{selectedRoom.pricePerDay} ج.م</span>
+                      <span className="text-gray-700 dark:text-gray-300">{t('rooms.pricePerDay')}</span>
+                      <span className="font-bold text-gray-900 dark:text-white">{selectedRoom.pricePerDay} {t('common.currency')}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-700 dark:text-gray-300">بالشهر</span>
-                      <span className="font-bold text-gray-900 dark:text-white">{selectedRoom.pricePerMonth.toLocaleString()} ج.م</span>
+                      <span className="text-gray-700 dark:text-gray-300">{t('rooms.pricePerMonth')}</span>
+                      <span className="font-bold text-gray-900 dark:text-white">{selectedRoom.pricePerMonth.toLocaleString()} {t('common.currency')}</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">المرافق المتاحة</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t('rooms.availableAmenities')}</p>
                   <div className="flex flex-wrap gap-2">
                     {selectedRoom.amenities.map((amenity, index) => (
                       <span key={index} className="inline-flex items-center px-3 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg gap-2">
@@ -1076,12 +1078,12 @@ export default function RoomsPage() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">الوصف</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('rooms.description')}</p>
                   <p className="text-gray-700 dark:text-gray-300">{selectedRoom.description}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">الحالة</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('rooms.status')}</p>
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(selectedRoom.status)}`}>
                     {getStatusIcon(selectedRoom.status)}
                     <span className="mr-2">{getStatusText(selectedRoom.status)}</span>
