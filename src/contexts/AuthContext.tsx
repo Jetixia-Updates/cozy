@@ -239,7 +239,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(true);
       setError(null);
 
-      const response = await authAPI.updateProfile(userData);
+      const response = await userAPI.updateProfile(userData);
       setUser(response.data);
     } catch (err: any) {
       setError(err.response?.data?.message || 'حدث خطأ أثناء تحديث الملف الشخصي');
@@ -251,7 +251,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshUser = async () => {
     try {
-      const response = await authAPI.getProfile();
+      const response = await userAPI.getProfile();
       setUser(response.data);
     } catch (error) {
       console.error('Failed to refresh user:', error);
