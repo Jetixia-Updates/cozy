@@ -145,3 +145,77 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// PATCH update user
+export async function PATCH(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: 'User ID is required' },
+        { status: 400 }
+      )
+    }
+
+    const body = await request.json()
+
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: body,
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        phone: true,
+        role: true,
+        membershipType: true,
+        walletBalance: true,
+        loyaltyPoints: true,
+        updatedAt: true,
+      },
+    })
+
+    return NextResponse.json({
+      success: true,
+      data: updatedUser,
+    })
+  } catch (error) {
+    console.error('Error updating user:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to update user' },
+      { status: 500 }
+    )
+  }
+}
+
+// DELETE user
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: 'User ID is required' },
+        { status: 400 }
+      )
+    }
+
+    await prisma.user.delete({
+      where: { id },
+    })
+
+    return NextResponse.json({
+      success: true,
+      message: 'User deleted successfully',
+    })
+  } catch (error) {
+    console.error('Error deleting user:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to delete user' },
+      { status: 500 }
+    )
+  }
+}

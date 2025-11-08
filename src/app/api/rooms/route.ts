@@ -94,3 +94,74 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// PATCH update room
+export async function PATCH(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: 'Room ID is required' },
+        { status: 400 }
+      )
+    }
+
+    const body = await request.json()
+
+    const updatedRoom = await prisma.room.update({
+      where: { id },
+      data: body,
+      include: {
+        seats: true,
+        _count: {
+          select: {
+            bookings: true,
+            seats: true,
+          },
+        },
+      },
+    })
+
+    return NextResponse.json({
+      success: true,
+      data: updatedRoom,
+    })
+  } catch (error) {
+    console.error('Error updating room:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to update room' },
+      { status: 500 }
+    )
+  }
+}
+
+// DELETE room
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: 'Room ID is required' },
+        { status: 400 }
+      )
+    }
+
+    await prisma.room.delete({
+      where: { id },
+    })
+
+    return NextResponse.json({
+      success: true,
+      message: 'Room deleted successfully',
+    })
+  } catch (error) {
+    console.error('Error deleting room:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to delete room' },
+      { status: 500 }
+    )
+  }
+}

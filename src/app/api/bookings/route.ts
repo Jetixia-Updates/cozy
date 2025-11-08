@@ -129,3 +129,74 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// PATCH update booking
+export async function PATCH(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: 'Booking ID is required' },
+        { status: 400 }
+      )
+    }
+
+    const body = await request.json()
+
+    const updatedBooking = await prisma.booking.update({
+      where: { id },
+      data: {
+        ...body,
+        date: body.date ? new Date(body.date) : undefined,
+      },
+      include: {
+        user: true,
+        room: true,
+        seat: true,
+        payments: true,
+      },
+    })
+
+    return NextResponse.json({
+      success: true,
+      data: updatedBooking,
+    })
+  } catch (error) {
+    console.error('Error updating booking:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to update booking' },
+      { status: 500 }
+    )
+  }
+}
+
+// DELETE booking
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json(
+        { success: false, error: 'Booking ID is required' },
+        { status: 400 }
+      )
+    }
+
+    await prisma.booking.delete({
+      where: { id },
+    })
+
+    return NextResponse.json({
+      success: true,
+      message: 'Booking deleted successfully',
+    })
+  } catch (error) {
+    console.error('Error deleting booking:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to delete booking' },
+      { status: 500 }
+    )
+  }
+}
