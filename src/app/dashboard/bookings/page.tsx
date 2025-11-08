@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
@@ -76,10 +76,79 @@ export default function BookingsPage() {
   const [showEditModal, setShowEditModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [viewType, setViewType] = useState<'list' | 'calendar'>('list')
-  const [bookingsList, setBookingsList] = useState<Booking[]>([])
+  const [bookings, setBookings] = useState<Booking[]>([])
+  const [loading, setLoading] = useState(true)
 
-  // Sample bookings data
-  const bookings: Booking[] = [
+  // Fetch bookings from API
+  useEffect(() => {
+    fetchBookings()
+  }, [filterStatus])
+
+  const fetchBookings = async () => {
+    try {
+      setLoading(true)
+      const params = new URLSearchParams()
+      if (filterStatus !== 'all') {
+        params.append('status', filterStatus.toUpperCase())
+      }
+      
+      const response = await fetch(`/api/bookings?${params}`)
+      const data = await response.json()
+      
+      if (data.success) {
+        // Transform API data to match component interface
+        const transformedBookings = data.data.map((booking: any) => ({
+          id: booking.id,
+          bookingNumber: booking.bookingNumber,
+          customer: {
+            name: `${booking.user.firstName} ${booking.user.lastName}`,
+            email: booking.user.email,
+            phone: booking.user.phone || '',
+          },
+          room: {
+            name: booking.room.name,
+            type: booking.room.type,
+            floor: booking.room.floor,
+            capacity: 0, // Not included in API response
+          },
+          date: new Date(booking.date).toISOString().split('T')[0],
+          startTime: booking.startTime,
+          endTime: booking.endTime,
+          duration: booking.duration,
+          amount: booking.totalAmount,
+          paymentStatus: booking.paymentStatus.toLowerCase(),
+          bookingStatus: booking.status.toLowerCase(),
+          services: [],
+          notes: booking.notes || '',
+          createdAt: booking.createdAt,
+        }))
+        setBookings(transformedBookings)
+      }
+    } catch (error) {
+      console.error('Error fetching bookings:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Delete handlers
+  const handleDelete = async (id: string) => {
+    if (confirm(i18n.language === 'ar' ? 'هل تريد حذف هذا الحجز؟' : 'Delete this booking?')) {
+      try {
+        // TODO: Implement delete API
+        await fetchBookings()
+      } catch (error) {
+        console.error('Error deleting booking:', error)
+      }
+    }
+  }
+
+  const handleRefresh = () => {
+    fetchBookings()
+  }
+
+  // Remove old mock data - keeping only structure for reference
+  const _mockBookings: Booking[] = [
     {
       id: '1',
       bookingNumber: 'BK-2024-001',
